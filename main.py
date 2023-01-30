@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, Request
-
+from fastapi.middleware.cors import CORSMiddleware
 from api.scrape import Vlr
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -18,6 +18,16 @@ app = FastAPI(
     redoc_url=None,
 )
 vlr = Vlr()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 TEN_MINUTES = 600
 
