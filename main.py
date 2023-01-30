@@ -36,9 +36,9 @@ TEN_MINUTES = 600
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-@app.get("/")
+@app.get('/')
 async def root():
-        return {"message":"hello"}
+        return {'message':'hello'}
 
 @app.get("/news")
 @limiter.limit("250/minute")
