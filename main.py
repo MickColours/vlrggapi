@@ -13,7 +13,7 @@ limiter = Limiter(key_func=get_remote_address)
 middleware = [
     Middleware(
         CORSMiddleware,
-        allow_origins=['*'],
+        allow_origins=['http://localhost:3000'],
         allow_credentials=True,
         allow_methods=['*'],
         allow_headers=['*']
@@ -36,6 +36,9 @@ TEN_MINUTES = 600
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+@app.get("/")
+async def root():
+        return {"message":"hello"}
 
 @app.get("/news")
 @limiter.limit("250/minute")
